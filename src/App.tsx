@@ -896,6 +896,11 @@ function App() {
   const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
   const [showFacilityInfo, setShowFacilityInfo] = useState(false);
   const [activeInfoPanel, setActiveInfoPanel] = useState<'country' | 'facility'>('country');
+  const [visibleSectors, setVisibleSectors] = useState<string[]>([]);
+  const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({
+    'facilities': true,
+    'sectors': true
+  });
   const globeRef = useRef<any>();
 
   // Group facilities by operator
@@ -920,6 +925,25 @@ function App() {
       name: 'All Facilities',
       color: '#9b59b6'
     }
+  ];
+
+  // List of sectors
+  const sectors = [
+    'Agriculture and Food Security',
+    'Carbon Credits',
+    'Construction',
+    'Energy and Environment Projects',
+    'Financial Services and Investments',
+    'Healthcare',
+    'Logistics and Infrastructure',
+    'Manufacturing',
+    'Marine Sector, Ports, Fisheries',
+    'Military and Defense',
+    'Mining',
+    'Oil and Gas',
+    'Real Estate',
+    'Tech',
+    'Textiles'
   ];
 
   // Load facilities data
@@ -988,6 +1012,23 @@ function App() {
         ? prev.filter(id => id !== groupId)
         : [...prev, groupId];
     });
+  }, []);
+
+  // Toggle sector visibility
+  const toggleSector = useCallback((sector: string) => {
+    setVisibleSectors(prev => 
+      prev.includes(sector) 
+        ? prev.filter(s => s !== sector) 
+        : [...prev, sector]
+    );
+  }, []);
+
+  // Toggle section expansion
+  const toggleSection = useCallback((section: string) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
   }, []);
 
   // Handle facility click
@@ -1250,6 +1291,48 @@ function App() {
           display: inline-block;
           margin-right: 0.5rem;
         }
+        .sector-checkbox {
+          display: flex;
+          align-items: center;
+          margin-bottom: 0.5rem;
+          cursor: pointer;
+        }
+        .sector-checkbox input {
+          margin-right: 0.5rem;
+        }
+        .sector-label {
+          font-size: 14px;
+          font-weight: 500;
+          color: #333;
+        }
+        .section-header {
+          font-size: 16px;
+          font-weight: 600;
+          color: #333;
+          margin-bottom: 0.5rem;
+        }
+        .section-header button {
+          margin-left: 0.5rem;
+          font-size: 14px;
+          font-weight: 500;
+          color: #666;
+          background-color: transparent;
+          border: none;
+          padding: 0;
+          cursor: pointer;
+        }
+        .section-header button:hover {
+          color: #333;
+        }
+        .section-content {
+          margin-bottom: 1rem;
+        }
+        .section-content.expanded {
+          display: block;
+        }
+        .section-content.collapsed {
+          display: none;
+        }
       `}</style>
 
       <div className="absolute top-4 left-4 z-10">
@@ -1275,20 +1358,50 @@ function App() {
           </div>
           
           <div className="border-t border-gray-200 pt-4">
-            <h4 className="text-md font-medium text-gray-800 mb-3">Facility Visibility</h4>
+            <div className="section-header">
+              <span>Facility Visibility</span>
+              <button onClick={() => toggleSection('facilities')}>
+                {expandedSections['facilities'] ? '▼' : '►'}
+              </button>
+            </div>
             
-            {facilityGroups.map(group => (
-              <label key={group.id} className="facility-checkbox">
-                <input
-                  type="checkbox"
-                  checked={visibleFacilityGroups.includes(group.id)}
-                  onChange={() => toggleFacilityGroup(group.id)}
-                  className="form-checkbox h-4 w-4 text-blue-600"
-                />
-                <span className="color-indicator" style={{ backgroundColor: group.color }}></span>
-                <span className="text-sm text-gray-700">{group.name}</span>
-              </label>
-            ))}
+            <div className={`section-content ${expandedSections['facilities'] ? 'expanded' : 'collapsed'}`}>
+              {facilityGroups.map(group => (
+                <label key={group.id} className="facility-checkbox">
+                  <input
+                    type="checkbox"
+                    checked={visibleFacilityGroups.includes(group.id)}
+                    onChange={() => toggleFacilityGroup(group.id)}
+                    className="form-checkbox h-4 w-4 text-blue-600"
+                  />
+                  <span className="color-indicator" style={{ backgroundColor: group.color }}></span>
+                  <span className="text-sm text-gray-700">{group.name}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+          
+          <div className="border-t border-gray-200 pt-4 mt-4">
+            <div className="section-header">
+              <span>Sectors</span>
+              <button onClick={() => toggleSection('sectors')}>
+                {expandedSections['sectors'] ? '▼' : '►'}
+              </button>
+            </div>
+            
+            <div className={`section-content ${expandedSections['sectors'] ? 'expanded' : 'collapsed'}`}>
+              {sectors.map(sector => (
+                <label key={sector} className="sector-checkbox">
+                  <input
+                    type="checkbox"
+                    checked={visibleSectors.includes(sector)}
+                    onChange={() => toggleSector(sector)}
+                    className="form-checkbox h-4 w-4 text-blue-600"
+                  />
+                  <span className="sector-label">{sector}</span>
+                </label>
+              ))}
+            </div>
           </div>
           
           <div className="border-t border-gray-200 pt-4 mt-4">
