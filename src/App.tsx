@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Globe from 'react-globe.gl';
 import { feature } from 'topojson-client';
-import { GlobeIcon, MapPin, Globe as GlobeIconSolid } from 'lucide-react';
+import { GlobeIcon, MapPin, Globe as GlobeIconSolid, AlertTriangle, Briefcase, FileText, Building, Shield } from 'lucide-react';
 import facilitiesData from './data/facilities.json';
 import sectorsData from './data/sectors.json';
+import sectorsDetailsData from './data/sectorsDetails.json';
 
 interface CountryInfo {
   name: string;
@@ -896,8 +897,10 @@ function App() {
   const [visibleFacilityGroups, setVisibleFacilityGroups] = useState<string[]>(['all']);
   const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
   const [showFacilityInfo, setShowFacilityInfo] = useState(false);
-  const [activeInfoPanel, setActiveInfoPanel] = useState<'country' | 'facility'>('country');
+  const [activeInfoPanel, setActiveInfoPanel] = useState<'country' | 'facility' | 'sector'>('country');
   const [visibleSectors, setVisibleSectors] = useState<string[]>([]);
+  const [selectedSector, setSelectedSector] = useState<string | null>(null);
+  const [showSectorInfo, setShowSectorInfo] = useState(false);
   const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({
     'facilities': true,
     'sectors': true
@@ -1017,12 +1020,99 @@ function App() {
 
   // Toggle sector visibility
   const toggleSector = useCallback((sector: string) => {
-    setVisibleSectors(prev => 
-      prev.includes(sector) 
-        ? prev.filter(s => s !== sector) 
-        : [...prev, sector]
-    );
+    // If the sector is already selected, deselect it
+    if (visibleSectors.includes(sector)) {
+      setVisibleSectors(prev => prev.filter(s => s !== sector));
+      
+      // If this was the selected sector for the info panel, close the panel
+      if (selectedSector === sector) {
+        setSelectedSector(null);
+        setShowSectorInfo(false);
+        
+        // If no other panels are open, reset the globe position
+        if (!showInfo && !showFacilityInfo) {
+          const globeEl = document.querySelector('.scene-container');
+          if (globeEl) {
+            globeEl.classList.remove('globe-left');
+          }
+        } else if (showInfo) {
+          // If country info is still open, make it active
+          setActiveInfoPanel('country');
+        } else if (showFacilityInfo) {
+          // If facility info is still open, make it active
+          setActiveInfoPanel('facility');
+        }
+      }
+    } else {
+      // Add the sector to visible sectors
+      setVisibleSectors(prev => [...prev, sector]);
+      
+      // Select this sector for the info panel
+      selectSector(sector);
+    }
+  }, [visibleSectors, selectedSector, showInfo, showFacilityInfo]);
+
+  // Select a sector and show its info panel
+  const selectSector = useCallback((sector: string) => {
+    setSelectedSector(sector);
+    setShowSectorInfo(true);
+    setActiveInfoPanel('sector');
+    
+    // Animate globe to the left if not already positioned
+    const globeEl = document.querySelector('.scene-container');
+    if (globeEl && !globeEl.classList.contains('globe-left')) {
+      globeEl.classList.add('globe-left');
+    }
+    
+    // Get the countries associated with this sector
+    const sectorData = sectorsData.find(s => s.sector === sector);
+    if (sectorData && sectorData.countries.length > 0) {
+      // Find the center point of the first country in the list
+      const firstCountry = sectorData.countries[0];
+      const matchingCountryInfo = Object.values(countryInfo).find(
+        country => country.name.toLowerCase() === firstCountry.toLowerCase()
+      );
+      
+      if (matchingCountryInfo && matchingCountryInfo.cities.length > 0) {
+        // Animate globe to the first city of the first country
+        if (globeRef.current) {
+          globeRef.current.pointOfView({
+            lat: matchingCountryInfo.cities[0].lat,
+            lng: matchingCountryInfo.cities[0].lng,
+            altitude: 1.8
+          }, 2000);
+        }
+      }
+    }
   }, []);
+
+  // Close sector info panel
+  const closeSectorInfo = useCallback(() => {
+    // Remove the selected sector from visible sectors
+    if (selectedSector) {
+      setVisibleSectors(prev => prev.filter(s => s !== selectedSector));
+    }
+    
+    setShowSectorInfo(false);
+    
+    // If country info is still open, make it active
+    if (showInfo) {
+      setActiveInfoPanel('country');
+    } else if (showFacilityInfo) {
+      // If facility info is still open, make it active
+      setActiveInfoPanel('facility');
+    } else {
+      // If no panels are open, reset the globe position
+      const globeEl = document.querySelector('.scene-container');
+      if (globeEl) {
+        globeEl.classList.remove('globe-left');
+      }
+    }
+    
+    setTimeout(() => {
+      setSelectedSector(null);
+    }, 500);
+  }, [showInfo, showFacilityInfo, selectedSector]);
 
   // Toggle section expansion
   const toggleSection = useCallback((section: string) => {
@@ -1150,7 +1240,7 @@ function App() {
   }, []);
 
   // Switch between info panels
-  const switchInfoPanel = useCallback((panel: 'country' | 'facility') => {
+  const switchInfoPanel = useCallback((panel: 'country' | 'facility' | 'sector') => {
     setActiveInfoPanel(panel);
   }, []);
 
@@ -1197,6 +1287,11 @@ function App() {
     
     return Array.from(countriesSet);
   }, [visibleSectors]);
+
+  // Get sector details
+  const getSectorDetails = useCallback((sectorName: string) => {
+    return sectorsDetailsData.find(sector => sector.sector === sectorName) || null;
+  }, []);
 
   return (
     <div className="w-full h-screen relative bg-gradient-to-b from-white to-gray-100 overflow-hidden">
@@ -1270,6 +1365,9 @@ function App() {
         }
         .panel-tab.facility-tab {
           top: 230px;
+        }
+        .panel-tab.sector-tab {
+          top: 360px;
         }
         .tab-icon {
           margin-bottom: 8px;
@@ -1606,15 +1704,13 @@ function App() {
         {showFacilityInfo && selectedFacility && (
           <>
             {/* Tab for facility panel */}
-            {showInfo && (
-              <div 
-                className={`panel-tab facility-tab ${activeInfoPanel === 'facility' ? 'active' : ''}`}
-                onClick={() => switchInfoPanel('facility')}
-              >
-                <MapPin className="tab-icon w-6 h-6 text-red-500" />
-                <span className="tab-label">Facility</span>
-              </div>
-            )}
+            <div 
+              className={`panel-tab facility-tab ${activeInfoPanel === 'facility' ? 'active' : ''}`}
+              onClick={() => switchInfoPanel('facility')}
+            >
+              <MapPin className="tab-icon w-6 h-6 text-red-500" />
+              <span className="tab-label">Facility</span>
+            </div>
             
             <div className="info-panel-content">
               <div className="flex items-center justify-between mb-6">
@@ -1674,6 +1770,182 @@ function App() {
                     which is a {selectedFacility.operator_type}.
                   </p>
                 </div>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Sector Info Panel */}
+      <div className={`info-panel ${showSectorInfo ? 'visible' : ''} ${activeInfoPanel === 'sector' ? 'active' : 'inactive'}`}>
+        {showSectorInfo && selectedSector && (
+          <>
+            {/* Tab for sector panel */}
+            <div 
+              className={`panel-tab sector-tab ${activeInfoPanel === 'sector' ? 'active' : ''}`}
+              onClick={() => switchInfoPanel('sector')}
+            >
+              <Briefcase className="tab-icon w-6 h-6 text-purple-600" />
+              <span className="tab-label">Sector</span>
+            </div>
+            
+            <div className="info-panel-content">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-8 h-8 rounded-full flex items-center justify-center bg-purple-500"
+                  >
+                    <span className="text-white text-xs font-bold">S</span>
+                  </div>
+                  <h2 className="text-3xl font-bold text-gray-800">{selectedSector}</h2>
+                </div>
+                <button
+                  onClick={closeSectorInfo}
+                  className="text-gray-500 hover:text-gray-700 transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                {(() => {
+                  const sectorDetails = getSectorDetails(selectedSector);
+                  
+                  if (!sectorDetails) {
+                    return (
+                      <div className="bg-yellow-50 p-4 rounded-lg">
+                        <p className="text-yellow-700">No detailed information available for this sector.</p>
+                      </div>
+                    );
+                  }
+                  
+                  return (
+                    <>
+                      {/* Description */}
+                      <div className="bg-gray-50 p-4 rounded-lg">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-2 flex items-center">
+                          <FileText className="w-5 h-5 mr-2 text-purple-600" />
+                          Description
+                        </h3>
+                        <p className="text-gray-700">{sectorDetails.description}</p>
+                      </div>
+                      
+                      {/* Investment Details */}
+                      {sectorDetails.investment_details && sectorDetails.investment_details !== "No detailed investment information available" && (
+                        <div className="bg-gray-50 p-4 rounded-lg">
+                          <h3 className="text-lg font-semibold text-gray-800 mb-2 flex items-center">
+                            <Building className="w-5 h-5 mr-2 text-purple-600" />
+                            Investment Details
+                          </h3>
+                          <p className="text-gray-700">{sectorDetails.investment_details}</p>
+                        </div>
+                      )}
+                      
+                      {/* Major Projects */}
+                      {sectorDetails.major_projects && sectorDetails.major_projects.length > 0 && (
+                        <div className="bg-gray-50 p-4 rounded-lg">
+                          <h3 className="text-lg font-semibold text-gray-800 mb-2 flex items-center">
+                            <Building className="w-5 h-5 mr-2 text-blue-600" />
+                            Major Projects
+                          </h3>
+                          <ul className="list-disc pl-5 text-gray-700">
+                            {sectorDetails.major_projects.map((project, index) => (
+                              <li key={index}>{project}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      
+                      {/* Security Risks */}
+                      {sectorDetails.security_risks && sectorDetails.security_risks.length > 0 && (
+                        <div className="bg-red-50 p-4 rounded-lg">
+                          <h3 className="text-lg font-semibold text-red-800 mb-2 flex items-center">
+                            <AlertTriangle className="w-5 h-5 mr-2 text-red-600" />
+                            Security Risks
+                          </h3>
+                          <ul className="list-disc pl-5 text-red-700">
+                            {sectorDetails.security_risks.map((risk, index) => (
+                              <li key={index}>{risk}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      
+                      {/* Mitigation Capabilities */}
+                      {sectorDetails.mitigation_capabilities && sectorDetails.mitigation_capabilities.length > 0 && (
+                        <div className="bg-green-50 p-4 rounded-lg">
+                          <h3 className="text-lg font-semibold text-green-800 mb-2 flex items-center">
+                            <Shield className="w-5 h-5 mr-2 text-green-600" />
+                            Mitigation Capabilities
+                          </h3>
+                          <ul className="list-disc pl-5 text-green-700">
+                            {sectorDetails.mitigation_capabilities.map((capability, index) => (
+                              <li key={index}>{capability}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      
+                      {/* Bilateral Agreements */}
+                      {sectorDetails.bilateral_agreements && sectorDetails.bilateral_agreements.length > 0 && (
+                        <div className="bg-blue-50 p-4 rounded-lg">
+                          <h3 className="text-lg font-semibold text-blue-800 mb-2 flex items-center">
+                            <FileText className="w-5 h-5 mr-2 text-blue-600" />
+                            Bilateral Agreements
+                          </h3>
+                          <ul className="list-disc pl-5 text-blue-700">
+                            {sectorDetails.bilateral_agreements.map((agreement, index) => (
+                              <li key={index}>{agreement}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      
+                      {/* Countries */}
+                      <div className="bg-gray-50 p-4 rounded-lg">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-2 flex items-center">
+                          <GlobeIcon className="w-5 h-5 mr-2 text-purple-600" />
+                          Countries Involved
+                        </h3>
+                        <div className="grid grid-cols-2 gap-2">
+                          {sectorDetails.countries.map((country, index) => (
+                            <div 
+                              key={index} 
+                              className="bg-white p-2 rounded border border-gray-200 text-sm cursor-pointer hover:bg-purple-50"
+                              onClick={() => {
+                                if (countryInfo[country.name]) {
+                                  focusOnCountry({ properties: { name: country.name } } as CountryFeature);
+                                  switchInfoPanel('country');
+                                }
+                              }}
+                            >
+                              {country.name}
+                              
+                              {/* Show project details for specific countries */}
+                              {'projects' in country && country.projects && country.projects.length > 0 && (
+                                <div className="mt-1 text-xs text-gray-500">
+                                  <strong>Projects:</strong>
+                                  <ul className="list-disc pl-4 mt-1">
+                                    {country.projects.map((project, idx) => (
+                                      <li key={idx}>{project}</li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                              
+                              {/* Show country-specific security risks */}
+                              {'security_risks' in country && country.security_risks && country.security_risks.length > 0 && (
+                                <div className="mt-1 text-xs text-red-500">
+                                  <strong>Risks:</strong> {country.security_risks.length} identified
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  );
+                })()}
               </div>
             </div>
           </>
