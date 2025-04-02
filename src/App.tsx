@@ -110,9 +110,9 @@ const countryInfo: { [key: string]: CountryInfo } = {
     description: 'Algeria is the largest country in Africa, known for its Mediterranean coastline, Saharan desert landscapes, and rich cultural heritage blending Arab, Berber, and French influences.',
     landmarks: ['Casbah of Algiers', 'Timgad Roman Ruins', 'Tassili n\'Ajjer', 'Notre Dame d\'Afrique'],
     cities: [
-      { name: 'Algiers', lat: 36.7538, lng: 3.0588, population: '3.5 million' },
-      { name: 'Oran', lat: 35.6969, lng: -0.6331, population: '2 million' },
-      { name: 'Constantine', lat: 36.3650, lng: 6.6147, population: '1 million' }
+      { name: 'Algiers', lat: 36.7372, lng: 3.0863, population: '3.5 million' },
+      { name: 'Oran', lat: 35.6969, lng: -0.6331, population: '1.5 million' },
+      { name: 'Constantine', lat: 36.3650, lng: 6.6147, population: '450,000' }
     ]
   },
   'Angola': {
@@ -185,25 +185,12 @@ const countryInfo: { [key: string]: CountryInfo } = {
     capital: 'Yaoundé',
     population: '26.5 million',
     area: '475,442 km²',
-    description: 'Cameroon is often called "Africa in miniature" for its geological and cultural diversity, featuring beaches, deserts, mountains, rainforests, and savannas.',
-    landmarks: ['Mount Cameroon', 'Waza National Park', 'Lobe Falls', 'Kribi Beach'],
+    description: 'Cameroon is known as "Africa in miniature" for its geological and cultural diversity, featuring beaches, deserts, mountains, rainforests, and savannas.',
+    landmarks: ['Mount Cameroon', 'Waza National Park', 'Kribi Beach', 'Limbe Wildlife Centre'],
     cities: [
-      { name: 'Yaoundé', lat: 3.8480, lng: 11.5021, population: '2.8 million' },
-      { name: 'Douala', lat: 4.0511, lng: 9.7679, population: '3.7 million' },
-      { name: 'Bamenda', lat: 5.9631, lng: 10.1591, population: '500,000' }
-    ]
-  },
-  'Cape Verde': {
-    name: 'Cape Verde',
-    capital: 'Praia',
-    population: '555,987',
-    area: '4,033 km²',
-    description: 'Cape Verde is an archipelago nation known for its Creole Portuguese-African culture, pristine beaches, and volcanic landscapes.',
-    landmarks: ['Mount Fogo', 'Cidade Velha', 'Santa Maria Beach', 'Pedra de Lume Salt Crater'],
-    cities: [
-      { name: 'Praia', lat: 14.9315, lng: -23.5125, population: '159,050' },
-      { name: 'Mindelo', lat: 16.8901, lng: -24.9804, population: '70,468' },
-      { name: 'Santa Maria', lat: 16.6000, lng: -22.9000, population: '17,231' }
+      { name: 'Yaoundé', lat: 3.8480, lng: 11.5021, population: '4 million' },
+      { name: 'Douala', lat: 4.0511, lng: 9.7679, population: '3.8 million' },
+      { name: 'Bamenda', lat: 5.9631, lng: 10.1591, population: '2 million' }
     ]
   },
   'Central African Republic': {
@@ -228,21 +215,8 @@ const countryInfo: { [key: string]: CountryInfo } = {
     landmarks: ['Ennedi Plateau', 'Lakes of Ounianga', 'Zakouma National Park', 'Tibesti Mountains'],
     cities: [
       { name: 'N\'Djamena', lat: 12.1348, lng: 15.0557, population: '1.3 million' },
-      { name: 'Moundou', lat: 8.5667, lng: 16.0833, population: '135,167' },
+      { name: 'Moundou', lat: 8.5667, lng: 16.0833, population: '142,462' },
       { name: 'Abéché', lat: 13.8292, lng: 20.8324, population: '76,492' }
-    ]
-  },
-  'Comoros': {
-    name: 'Comoros',
-    capital: 'Moroni',
-    population: '869,601',
-    area: '2,235 km²',
-    description: 'The Comoros is an archipelago nation known for its volcanic islands, diverse marine life, and unique blend of African, Arab, and French cultural influences.',
-    landmarks: ['Mount Karthala', 'Mohéli Marine Park', 'Chindini Beach', 'Old Friday Mosque'],
-    cities: [
-      { name: 'Moroni', lat: -11.7022, lng: 43.2551, population: '111,329' },
-      { name: 'Mutsamudu', lat: -12.1667, lng: 44.4000, population: '30,000' },
-      { name: 'Fomboni', lat: -12.2833, lng: 43.7333, population: '14,966' }
     ]
   },
   'Congo': {
@@ -334,6 +308,19 @@ const countryInfo: { [key: string]: CountryInfo } = {
       { name: 'Addis Ababa', lat: 9.0320, lng: 38.7492, population: '3.4 million' },
       { name: 'Dire Dawa', lat: 9.5931, lng: 41.8661, population: '440,000' },
       { name: 'Mek\'ele', lat: 13.4967, lng: 39.4767, population: '310,436' }
+    ]
+  },
+  'Eswatini': {
+    name: 'Eswatini',
+    capital: 'Mbabane (administrative), Lobamba (royal and legislative)',
+    population: '1.2 million',
+    area: '17,364 km²',
+    description: 'Eswatini (formerly known as Swaziland) is one of the last absolute monarchies in the world. It\'s known for its wilderness reserves, traditional festivals, and rich cultural heritage that blends ancient customs with modern life.',
+    landmarks: ['Mlilwane Wildlife Sanctuary', 'Mantenga Cultural Village', 'Sibebe Rock', 'Hlane Royal National Park'],
+    cities: [
+      { name: 'Mbabane', lat: -26.3054, lng: 31.1367, population: '95,000' },
+      { name: 'Manzini', lat: -26.4956, lng: 31.3797, population: '110,000' },
+      { name: 'Lobamba', lat: -26.4667, lng: 31.2000, population: '6,000' }
     ]
   },
   'Gabon': {
@@ -550,19 +537,6 @@ const countryInfo: { [key: string]: CountryInfo } = {
       { name: 'Kiffa', lat: 16.6167, lng: -11.4000, population: '40,281' }
     ]
   },
-  'Mauritius': {
-    name: 'Mauritius',
-    capital: 'Port Louis',
-    population: '1.3 million',
-    area: '2,040 km²',
-    description: 'Mauritius is a tropical paradise known for its beaches, lagoons, and multicultural heritage, featuring diverse cuisine and colonial architecture.',
-    landmarks: ['Black River Gorges National Park', 'Chamarel Seven Colored Earth', 'Le Morne Brabant', 'Île aux Cerfs'],
-    cities: [
-      { name: 'Port Louis', lat: -20.1619, lng: 57.4989, population: '147,066' },
-      { name: 'Beau Bassin-Rose Hill', lat: -20.2332, lng: 57.4683, population: '111,355' },
-      { name: 'Vacoas-Phoenix', lat: -20.2981, lng: 57.4783, population: '106,291' }
-    ]
-  },
   'Morocco': {
     name: 'Morocco',
     capital: 'Rabat',
@@ -641,43 +615,17 @@ const countryInfo: { [key: string]: CountryInfo } = {
       { name: 'Gisenyi', lat: -1.7017, lng: 29.2569, population: '83,623' }
     ]
   },
-  'São Tomé and Príncipe': {
-    name: 'São Tomé and Príncipe',
-    capital: 'São Tomé',
-    population: '219,159',
-    area: '964 km²',
-    description: 'This island nation features lush rainforests, beautiful beaches, and colonial Portuguese architecture, known for its cacao production.',
-    landmarks: ['Obo National Park', 'Pico Cão Grande', 'Bom Bom Island', 'São Sebastião Museum'],
-    cities: [
-      { name: 'São Tomé', lat: 0.3365, lng: 6.7273, population: '71,868' },
-      { name: 'Santo António', lat: 1.6390, lng: 7.4209, population: '2,000' },
-      { name: 'Neves', lat: 0.3583, lng: 6.5500, population: '1,225' }
-    ]
-  },
   'Senegal': {
     name: 'Senegal',
     capital: 'Dakar',
     population: '16.7 million',
     area: '196,722 km²',
-    description: 'Senegal is known for its musical heritage, colonial architecture, diverse wildlife, and vibrant arts scene.',
-    landmarks: ['Djoudj National Bird Sanctuary', 'House of Slaves', 'Lake Retba', 'Great Mosque of Touba'],
+    description: 'Senegal is known for its vibrant culture, diverse ecosystems including the Sahel and Atlantic coast, and as a gateway to West Africa.',
+    landmarks: ['Gorée Island', 'Pink Lake', 'Djoudj National Bird Sanctuary', 'African Renaissance Monument'],
     cities: [
-      { name: 'Dakar', lat: 14.7167, lng: -17.4677, population: '3.1 million' },
-      { name: 'Touba', lat: 14.8667, lng: -15.8833, population: '529,176' },
+      { name: 'Dakar', lat: 14.7167, lng: -17.4677, population: '2.5 million' },
+      { name: 'Touba', lat: 14.8667, lng: -15.8833, population: '1 million' },
       { name: 'Thiès', lat: 14.7833, lng: -16.9167, population: '320,000' }
-    ]
-  },
-  'Seychelles': {
-    name: 'Seychelles',
-    capital: 'Victoria',
-    population: '98,462',
-    area: '459 km²',
-    description: 'The Seychelles is an archipelago nation known for its pristine beaches, coral reefs, and unique wildlife including giant tortoises.',
-    landmarks: ['Vallée de Mai', 'Anse Source d\'Argent', 'Morne Seychellois National Park', 'Aldabra Atoll'],
-    cities: [
-      { name: 'Victoria', lat: -4.6191, lng: 55.4513, population: '26,450' },
-      { name: 'Anse Boileau', lat: -4.7167, lng: 55.4833, population: '4,183' },
-      { name: 'Beau Vallon', lat: -4.6167, lng: 55.4333, population: '4,142' }
     ]
   },
   'Sierra Leone': {
@@ -699,11 +647,24 @@ const countryInfo: { [key: string]: CountryInfo } = {
     population: '15.9 million',
     area: '637,657 km²',
     description: 'Somalia features the longest coastline in mainland Africa, historic coastal towns, and traditional nomadic culture.',
-    landmarks: ['Laas Geel', 'Mogadishu Cathedral', 'Shanghai Old City', 'Kismayo National Park'],
+    landmarks: ['Laas Geel Cave Paintings', 'Mogadishu Cathedral', 'Shanghai Old City', 'Kismayo National Park'],
     cities: [
       { name: 'Mogadishu', lat: 2.0469, lng: 45.3182, population: '2.2 million' },
-      { name: 'Hargeisa', lat: 9.5600, lng: 44.0650, population: '1.2 million' },
-      { name: 'Bosaso', lat: 11.2842, lng: 49.1816, population: '700,000' }
+      { name: 'Hargeisa', lat: 9.5582, lng: 44.0410, population: '760,000' },
+      { name: 'Kismayo', lat: -0.3582, lng: 42.5454, population: '180,000' }
+    ]
+  },
+  'Somaliland': {
+    name: 'Somaliland',
+    capital: 'Hargeisa',
+    population: '5.7 million',
+    area: '176,120 km²',
+    description: 'Somaliland is a self-declared state in the Horn of Africa, internationally recognized as part of Somalia but functioning as a de facto independent country since 1991. It has its own government, currency, and military.',
+    landmarks: ['Laas Geel Cave Paintings', 'Sheikh Mountains', 'Berbera Beach', 'Daallo Mountain'],
+    cities: [
+      { name: 'Hargeisa', lat: 9.5582, lng: 44.0410, population: '1.2 million' },
+      { name: 'Berbera', lat: 10.4325, lng: 45.0167, population: '240,000' },
+      { name: 'Burao', lat: 9.5236, lng: 45.5336, population: '420,000' }
     ]
   },
   'South Africa': {
@@ -888,23 +849,23 @@ const nigerFlightPaths: FlightPath[] = [
 function App() {
   const [countries, setCountries] = useState<{ features: CountryFeature[] }>({ features: [] });
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-  const [hoverD, setHoverD] = useState<CountryFeature | null>(null);
-  const [selectedTexture, setSelectedTexture] = useState(globeTextures[0]);
+  const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
+  const [selectedSector, setSelectedSector] = useState<string | null>(null);
+  const [visibleSectors, setVisibleSectors] = useState<string[]>([]);
   const [showInfo, setShowInfo] = useState(false);
+  const [activeInfoPanel, setActiveInfoPanel] = useState<'country' | 'facility' | 'sector'>('country');
   const [error, setError] = useState<string | null>(null);
   const [arcsData, setArcsData] = useState<FlightPath[]>([]);
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [visibleFacilityGroups, setVisibleFacilityGroups] = useState<string[]>(['all']);
-  const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
   const [showFacilityInfo, setShowFacilityInfo] = useState(false);
-  const [activeInfoPanel, setActiveInfoPanel] = useState<'country' | 'facility' | 'sector'>('country');
-  const [visibleSectors, setVisibleSectors] = useState<string[]>([]);
-  const [selectedSector, setSelectedSector] = useState<string | null>(null);
   const [showSectorInfo, setShowSectorInfo] = useState(false);
   const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({
     'facilities': true,
     'sectors': true
   });
+  const [selectedGlobeTexture, setSelectedGlobeTexture] = useState(globeTextures[0]);
+  const [backgroundColorMode, setBackgroundColorMode] = useState<'white' | 'black'>('white');
   const globeRef = useRef<any>();
 
   // Group facilities by operator
@@ -1164,33 +1125,39 @@ function App() {
     }, 500);
   }, [showInfo]);
 
-  const focusOnCountry = useCallback((polygon: CountryFeature) => {
-    if (!polygon || !globeRef.current) return;
-
-    // Get the country name from the properties
-    const countryName = polygon.properties?.name;
-    console.log('Clicked country:', countryName);
-
-    // Find the matching country info by comparing names case-insensitively
-    const matchingCountry = Object.values(countryInfo).find(
-      country => country.name.toLowerCase() === countryName?.toLowerCase()
-    );
-
-    if (matchingCountry) {
-      const centerPoint = matchingCountry.cities[0] || getPolygonCentroid(polygon);
+  const focusOnCountry = useCallback((country: CountryFeature) => {
+    if (!country || !country.properties?.name) return;
+    
+    const countryName = country.properties.name;
+    
+    // Normalize country name for lookup
+    let normalizedCountryName = countryName;
+    if (countryName.toLowerCase() === 'eswatini') {
+      normalizedCountryName = 'Eswatini';
+    }
+    
+    if (countryInfo[normalizedCountryName]) {
+      setSelectedCountry(normalizedCountryName);
+      setSelectedFacility(null);
+      setSelectedSector(null);
+      setVisibleSectors([]);
+      setActiveInfoPanel('country');
       
-      if (centerPoint) {
-        setSelectedCountry(matchingCountry.name);
-        setActiveInfoPanel('country');
-        
-        // If Niger is selected, show the flight paths
-        if (matchingCountry.name === 'Niger') {
-          setArcsData(nigerFlightPaths);
-        } else {
-          setArcsData([]);
-        }
-        
-        // Animate globe position
+      // Find the country coordinates for centering
+      const centerPoint = {
+        lat: countryInfo[normalizedCountryName].cities[0].lat,
+        lng: countryInfo[normalizedCountryName].cities[0].lng
+      };
+      
+      // If Niger is selected, show the flight paths
+      if (normalizedCountryName === 'Niger') {
+        setArcsData(nigerFlightPaths);
+      } else {
+        setArcsData([]);
+      }
+      
+      // Zoom to the country
+      if (globeRef.current) {
         globeRef.current.pointOfView({
           lat: centerPoint.lat,
           lng: centerPoint.lng,
@@ -1207,12 +1174,8 @@ function App() {
         }, 500);
       }
     } else {
-      console.log('No matching country info found for:', countryName);
+      console.log('No matching country info found for:', normalizedCountryName);
     }
-  }, []);
-
-  const handleCountryHover = useCallback((polygon: CountryFeature | null) => {
-    setHoverD(polygon);
   }, []);
 
   const resetView = useCallback(() => {
@@ -1251,25 +1214,6 @@ function App() {
     if (facility.color === 'square') return '#3498db';
     return '#f39c12'; // default color
   }, []);
-
-  const getPolygonCentroid = (polygon: any) => {
-    if (!polygon || !polygon.geometry || !polygon.geometry.coordinates) return null;
-
-    // For MultiPolygon, use the first polygon's first ring
-    const coordinates = polygon.geometry.type === 'MultiPolygon' 
-      ? polygon.geometry.coordinates[0][0] 
-      : polygon.geometry.coordinates[0];
-
-    // Calculate the centroid
-    const sumLat = coordinates.reduce((sum: number, coord: number[]) => sum + coord[1], 0);
-    const sumLng = coordinates.reduce((sum: number, coord: number[]) => sum + coord[0], 0);
-    const count = coordinates.length;
-
-    return {
-      lat: sumLat / count,
-      lng: sumLng / count
-    };
-  };
 
   // Get countries associated with selected sectors
   const getCountriesBySectors = useCallback(() => {
@@ -1461,8 +1405,11 @@ function App() {
             </label>
             <select
               id="texture-select"
-              value={selectedTexture.id}
-              onChange={(e) => setSelectedTexture(globeTextures.find(t => t.id === e.target.value) || globeTextures[0])}
+              value={selectedGlobeTexture.id}
+              onChange={(e) => {
+                const texture = globeTextures.find(t => t.id === e.target.value);
+                if (texture) setSelectedGlobeTexture(texture);
+              }}
               className="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               {globeTextures.map(texture => (
@@ -1470,6 +1417,21 @@ function App() {
                   {texture.name}
                 </option>
               ))}
+            </select>
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="background-select" className="block text-sm font-medium text-gray-700 mb-2">
+              Background Color
+            </label>
+            <select
+              id="background-select"
+              value={backgroundColorMode}
+              onChange={(e) => setBackgroundColorMode(e.target.value as 'white' | 'black')}
+              className="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="white">White</option>
+              <option value="black">Black</option>
             </select>
           </div>
           
@@ -1537,72 +1499,72 @@ function App() {
       <div className="absolute inset-0">
         <Globe
           ref={globeRef}
-          globeImageUrl={selectedTexture.url}
+          globeImageUrl={selectedGlobeTexture.url}
+          backgroundImageUrl={backgroundColorMode === 'black' ? "//unpkg.com/three-globe/example/img/night-sky.png" : undefined}
+          backgroundColor={backgroundColorMode === 'white' ? "#ffffff" : "rgba(0,0,0,0)"}
           polygonsData={countries.features}
           polygonAltitude={0.01}
-          polygonCapColor={(d: CountryFeature) => {
-            // Get countries associated with selected sectors
+          polygonCapColor={(d: any) => {
+            const feature = d as CountryFeature;
             const sectorCountries = getCountriesBySectors();
-            
-            // Check if this is the selected country
-            const isSelected = selectedCountry && d.properties?.name?.toLowerCase() === selectedCountry.toLowerCase();
-            
-            // Check if this country is associated with a selected sector
+            const isSelected = selectedCountry && feature.properties?.name?.toLowerCase() === selectedCountry.toLowerCase();
             const isInSelectedSector = sectorCountries.some(country => 
-              country.toLowerCase() === d.properties?.name?.toLowerCase()
+              country.toLowerCase() === feature.properties?.name?.toLowerCase()
             );
-            
-            // Check if this is the hovered country
-            const isHovered = d === hoverD;
             
             if (isInSelectedSector) {
               return 'rgba(0, 200, 100, 0.3)'; // Light green for sector-associated countries
             } else if (isSelected) {
               return 'rgba(0, 100, 200, 0.3)'; // Blue highlight for selected country
-            } else if (isHovered) {
-              return 'rgba(0, 0, 0, 0.2)'; // Original hover color
             } else {
               return 'rgba(0, 0, 0, 0.1)'; // Original default color
             }
           }}
-          polygonSideColor={() => 'rgba(0, 0, 0, 0.05)'}
-          polygonStrokeColor={() => '#666'}
-          polygonLabel={({ properties: d }: CountryFeature) => `
-            <div class="bg-white rounded-lg p-2 shadow-lg">
-              <div class="font-bold text-gray-800">${d.name}</div>
-            </div>
-          `}
-          onPolygonHover={handleCountryHover}
-          onPolygonClick={focusOnCountry}
-          backgroundColor="rgba(0,0,0,0)"
-          
-          // Arc data for flight paths
+          polygonSideColor={() => 'rgba(0, 100, 0, 0.15)'}
+          polygonStrokeColor={() => '#111'}
+          polygonLabel={(d: any) => {
+            const feature = d as CountryFeature;
+            // Handle special case for eSwatini
+            if (feature.properties?.name === 'eSwatini') {
+              return `<b>Eswatini</b>`;
+            }
+            return `<b>${feature.properties?.name}</b>`;
+          }}
+          onPolygonHover={() => {}} 
+          onPolygonClick={(polygon: any) => {
+            const feature = polygon as CountryFeature;
+            if (feature.properties?.name) {
+              // Handle special case for eSwatini
+              if (feature.properties.name === 'eSwatini') {
+                focusOnCountry({ ...feature, properties: { ...feature.properties, name: 'Eswatini' } });
+              } else {
+                focusOnCountry(feature);
+              }
+            }
+          }}
           arcsData={arcsData}
           arcColor={(d: any) => d.color}
           arcStroke={1.0} // Thin arcs
-          arcDashLength={0.02} // Half the previous size for twice as many pills
-          arcDashGap={0.06} // Half the previous gap for twice as many pills
-          arcDashAnimateTime={3500} // Slower animation
+          arcDashLength={0.4}
+          arcDashGap={0.2}
           arcAltitude={0.05} // Keep arcs flat
           arcLabel={(d: any) => d.label}
           arcsTransitionDuration={1500}
-          
-          // Facility markers
           pointsData={visibleFacilities()}
           pointLat="latitude"
           pointLng="longitude"
-          pointColor={d => {
+          pointColor={(d: any) => {
             const facility = d as Facility;
             return getMarkerColor(facility);
           }}
           pointAltitude={0.01}
           pointRadius={0.25}
           pointsMerge={false}
-          onPointClick={point => {
+          onPointClick={(point: any) => {
             const facility = point as Facility;
             handleFacilityClick(facility);
           }}
-          pointLabel={d => {
+          pointLabel={(d: any) => {
             const facility = d as Facility;
             return `
               <div class="bg-white rounded-lg p-2 shadow-lg">

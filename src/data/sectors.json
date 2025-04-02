@@ -1,7 +1,7 @@
 [
   {
     "sector": "Agriculture and Food Security",
-    "countries": ["South Africa", "Nigeria", "Namibia", "Ethiopia", "Mauritius", "Uganda"]
+    "countries": ["South Africa", "Nigeria", "Namibia", "Ethiopia", "Uganda"]
   },
   {
     "sector": "Carbon Credits",
@@ -21,15 +21,15 @@
   },
   {
     "sector": "Healthcare",
-    "countries": ["Mauritius", "Uganda"]
+    "countries": ["Uganda"]
   },
   {
     "sector": "Logistics and Infrastructure",
-    "countries": ["South Africa", "Ghana", "Botswana", "Senegal", "Algeria", "Mozambique", "Rwanda", "Djibouti", "Egypt", "Mauritius", "Uganda"]
+    "countries": ["South Africa", "Ghana", "Botswana", "Senegal", "Algeria", "Mozambique", "Rwanda", "Djibouti", "Egypt", "Uganda"]
   },
   {
     "sector": "Manufacturing",
-    "countries": ["Mauritius", "Uganda"]
+    "countries": ["Uganda"]
   },
   {
     "sector": "Marine Sector, Ports, Fisheries",
@@ -45,15 +45,15 @@
   },
   {
     "sector": "Oil and Gas",
-    "countries": ["Mauritius", "Uganda"]
+    "countries": ["Uganda"]
   },
   {
     "sector": "Real Estate",
-    "countries": ["Libya", "Mauritius", "Uganda"]
+    "countries": ["Libya", "Uganda"]
   },
   {
     "sector": "Tech",
-    "countries": ["Mauritius", "Uganda"]
+    "countries": ["Uganda"]
   },
   {
     "sector": "Textiles",

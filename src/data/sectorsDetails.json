@@ -39,12 +39,6 @@
         "mitigation_capabilities": []
       },
       {
-        "name": "Mauritius",
-        "investment_type": "Not specified in document",
-        "security_risks": [],
-        "mitigation_capabilities": []
-      },
-      {
         "name": "Uganda",
         "investment_type": "Not specified in document",
         "security_risks": [],
@@ -202,12 +196,6 @@
     "bilateral_agreements": [],
     "countries": [
       {
-        "name": "Mauritius",
-        "investment_type": "Not specified in document",
-        "security_risks": [],
-        "mitigation_capabilities": []
-      },
-      {
         "name": "Uganda",
         "investment_type": "Not specified in document",
         "security_risks": [],
@@ -285,12 +273,6 @@
         "mitigation_capabilities": []
       },
       {
-        "name": "Mauritius",
-        "investment_type": "Not specified in document",
-        "security_risks": [],
-        "mitigation_capabilities": []
-      },
-      {
         "name": "Uganda",
         "investment_type": "Not specified in document",
         "security_risks": [],
@@ -307,12 +289,6 @@
     "mitigation_capabilities": [],
     "bilateral_agreements": [],
     "countries": [
-      {
-        "name": "Mauritius",
-        "investment_type": "Not specified in document",
-        "security_risks": [],
-        "mitigation_capabilities": []
-      },
       {
         "name": "Uganda",
         "investment_type": "Not specified in document",
@@ -540,12 +516,6 @@
     "bilateral_agreements": [],
     "countries": [
       {
-        "name": "Mauritius",
-        "investment_type": "Not specified in document",
-        "security_risks": [],
-        "mitigation_capabilities": []
-      },
-      {
         "name": "Uganda",
         "investment_type": "Not specified in document",
         "security_risks": [],
@@ -588,12 +558,6 @@
         ]
       },
       {
-        "name": "Mauritius",
-        "investment_type": "Not specified in document",
-        "security_risks": [],
-        "mitigation_capabilities": []
-      },
-      {
         "name": "Uganda",
         "investment_type": "Not specified in document",
         "security_risks": [],
@@ -610,12 +574,6 @@
     "mitigation_capabilities": [],
     "bilateral_agreements": [],
     "countries": [
-      {
-        "name": "Mauritius",
-        "investment_type": "Not specified in document",
-        "security_risks": [],
-        "mitigation_capabilities": []
-      },
       {
         "name": "Uganda",
         "investment_type": "Not specified in document",
@@ -648,17 +606,8 @@
     "major_projects": [],
     "security_risks": [],
     "mitigation_capabilities": [],
-    "bilateral_agreements": [
-      "Mauritius - BILATERAL AGREEMENT for trade and investment opportunities in ICT sectors"
-    ],
-    "countries": [
-      {
-        "name": "Mauritius",
-        "investment_type": "Not specified in document",
-        "security_risks": [],
-        "mitigation_capabilities": []
-      }
-    ]
+    "bilateral_agreements": [],
+    "countries": []
   },
   {
     "sector": "Airports",
@@ -667,17 +616,8 @@
     "major_projects": [],
     "security_risks": [],
     "mitigation_capabilities": [],
-    "bilateral_agreements": [
-      "Mauritius - BILATERAL AGREEMENT for trade and investment opportunities in airports sectors"
-    ],
-    "countries": [
-      {
-        "name": "Mauritius",
-        "investment_type": "Not specified in document",
-        "security_risks": [],
-        "mitigation_capabilities": []
-      }
-    ]
+    "bilateral_agreements": [],
+    "countries": []
   },
   {
     "sector": "Trade Relations",
@@ -687,13 +627,6 @@
     "security_risks": [],
     "mitigation_capabilities": [],
     "bilateral_agreements": [],
-    "countries": [
-      {
-        "name": "Mauritius",
-        "investment_type": "BILATERAL AGREEMENT for trade and investment opportunities",
-        "security_risks": [],
-        "mitigation_capabilities": []
-      }
-    ]
+    "countries": []
   }
 ]
