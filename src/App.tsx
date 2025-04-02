@@ -1388,15 +1388,13 @@ function App() {
         {showInfo && selectedCountry && countryInfo[selectedCountry] && (
           <>
             {/* Tab for country panel */}
-            {showFacilityInfo && (
-              <div 
-                className={`panel-tab country-tab ${activeInfoPanel === 'country' ? 'active' : ''}`}
-                onClick={() => switchInfoPanel('country')}
-              >
-                <GlobeIconSolid className="tab-icon w-6 h-6 text-blue-600" />
-                <span className="tab-label">Country</span>
-              </div>
-            )}
+            <div 
+              className={`panel-tab country-tab ${activeInfoPanel === 'country' ? 'active' : ''}`}
+              onClick={() => switchInfoPanel('country')}
+            >
+              <GlobeIconSolid className="tab-icon w-6 h-6 text-blue-600" />
+              <span className="tab-label">Country</span>
+            </div>
             
             <div className="info-panel-content">
               <div className="flex items-center justify-between mb-6">
