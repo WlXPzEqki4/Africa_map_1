@@ -1,0 +1,62 @@
+[
+  {
+    "sector": "Agriculture and Food Security",
+    "countries": ["South Africa", "Nigeria", "Namibia", "Ethiopia", "Mauritius", "Uganda"]
+  },
+  {
+    "sector": "Carbon Credits",
+    "countries": ["Nigeria", "Namibia", "Ethiopia"]
+  },
+  {
+    "sector": "Construction",
+    "countries": ["Libya"]
+  },
+  {
+    "sector": "Energy and Environment Projects",
+    "countries": ["Liberia", "Congo"]
+  },
+  {
+    "sector": "Financial Services and Investments",
+    "countries": ["Ghana", "Botswana", "Senegal", "Algeria", "Mozambique", "Rwanda", "Djibouti", "Egypt"]
+  },
+  {
+    "sector": "Healthcare",
+    "countries": ["Mauritius", "Uganda"]
+  },
+  {
+    "sector": "Logistics and Infrastructure",
+    "countries": ["South Africa", "Ghana", "Botswana", "Senegal", "Algeria", "Mozambique", "Rwanda", "Djibouti", "Egypt", "Mauritius", "Uganda"]
+  },
+  {
+    "sector": "Manufacturing",
+    "countries": ["Mauritius", "Uganda"]
+  },
+  {
+    "sector": "Marine Sector, Ports, Fisheries",
+    "countries": ["Somalia", "Ghana", "Botswana", "Senegal", "Algeria", "Mozambique", "Rwanda", "Djibouti", "Egypt"]
+  },
+  {
+    "sector": "Military and Defense",
+    "countries": ["Morocco", "Mauritania", "Chad", "Eritrea", "Mali", "Guinea"]
+  },
+  {
+    "sector": "Mining",
+    "countries": ["Kenya", "Tanzania", "Burundi", "Zambia", "Angola", "Zimbabwe", "South Africa", "Democratic Republic of the Congo"]
+  },
+  {
+    "sector": "Oil and Gas",
+    "countries": ["Mauritius", "Uganda"]
+  },
+  {
+    "sector": "Real Estate",
+    "countries": ["Libya", "Mauritius", "Uganda"]
+  },
+  {
+    "sector": "Tech",
+    "countries": ["Mauritius", "Uganda"]
+  },
+  {
+    "sector": "Textiles",
+    "countries": ["Uganda"]
+  }
+]

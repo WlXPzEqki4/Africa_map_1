@@ -3,6 +3,7 @@ import Globe from 'react-globe.gl';
 import { feature } from 'topojson-client';
 import { GlobeIcon, MapPin, Globe as GlobeIconSolid } from 'lucide-react';
 import facilitiesData from './data/facilities.json';
+import sectorsData from './data/sectors.json';
 
 interface CountryInfo {
   name: string;
@@ -1180,6 +1181,23 @@ function App() {
     };
   };
 
+  // Get countries associated with selected sectors
+  const getCountriesBySectors = useCallback(() => {
+    if (visibleSectors.length === 0) return [];
+    
+    // Get all countries associated with the selected sectors
+    const countriesSet = new Set<string>();
+    
+    visibleSectors.forEach(sector => {
+      const sectorData = sectorsData.find(s => s.sector === sector);
+      if (sectorData) {
+        sectorData.countries.forEach(country => countriesSet.add(country));
+      }
+    });
+    
+    return Array.from(countriesSet);
+  }, [visibleSectors]);
+
   return (
     <div className="w-full h-screen relative bg-gradient-to-b from-white to-gray-100 overflow-hidden">
       <style>{`
@@ -1425,12 +1443,23 @@ function App() {
           polygonsData={countries.features}
           polygonAltitude={0.01}
           polygonCapColor={(d: CountryFeature) => {
+            // Get countries associated with selected sectors
+            const sectorCountries = getCountriesBySectors();
+            
             // Check if this is the selected country
             const isSelected = selectedCountry && d.properties?.name?.toLowerCase() === selectedCountry.toLowerCase();
+            
+            // Check if this country is associated with a selected sector
+            const isInSelectedSector = sectorCountries.some(country => 
+              country.toLowerCase() === d.properties?.name?.toLowerCase()
+            );
+            
             // Check if this is the hovered country
             const isHovered = d === hoverD;
             
-            if (isSelected) {
+            if (isInSelectedSector) {
+              return 'rgba(0, 200, 100, 0.3)'; // Light green for sector-associated countries
+            } else if (isSelected) {
               return 'rgba(0, 100, 200, 0.3)'; // Blue highlight for selected country
             } else if (isHovered) {
               return 'rgba(0, 0, 0, 0.2)'; // Original hover color
