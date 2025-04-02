@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150">
+  <rect width="300" height="150" fill="#002147"/>
+  <g fill="#d3d9de">
+    <!-- I -->
+    <rect x="20" y="30" width="30" height="90"/>
+    <!-- R -->
+    <rect x="60" y="30" width="30" height="90"/>
+    <rect x="90" y="30" width="40" height="30"/>
+    <rect x="90" y="60" width="30" height="10"/>
+    <polygon points="90,70 120,70 90,100"/>
+    <!-- H -->
+    <rect x="140" y="30" width="30" height="90"/>
+    <rect x="170" y="60" width="30" height="30"/>
+    <rect x="200" y="30" width="30" height="90"/>
+  </g>
+</svg>

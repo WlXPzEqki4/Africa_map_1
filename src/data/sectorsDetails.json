@@ -438,6 +438,18 @@
       "Political instability",
       "Resource nationalism"
     ],
+    "entities": [
+      {
+        "name": "Emirati Group IHC",
+        "logo": "ihc_logo.png",
+        "description": "International Holding Company, a major Emirati conglomerate with diverse investments across multiple sectors"
+      },
+      {
+        "name": "International Resources Holding",
+        "logo": "irh_logo.png",
+        "description": "IHC subsidiary focused on mining and resource extraction operations across Africa"
+      }
+    ],
     "mitigation_capabilities": [],
     "bilateral_agreements": [],
     "countries": [

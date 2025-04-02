@@ -58,6 +58,28 @@ interface Facility {
   longitude: number;
 }
 
+interface SectorDetails {
+  sector: string;
+  description: string;
+  investment_details: string;
+  major_projects: string[];
+  security_risks: string[];
+  mitigation_capabilities: string[];
+  bilateral_agreements: string[];
+  entities?: Array<{
+    name: string;
+    logo: string;
+    description: string;
+  }>;
+  countries: Array<{
+    name: string;
+    investment_type: string;
+    security_risks: string[];
+    mitigation_capabilities: string[];
+    projects?: string[];
+  }>;
+}
+
 const globeTextures = [
   {
     id: 'labeled-natural',
@@ -749,13 +771,26 @@ const countryInfo: { [key: string]: CountryInfo } = {
     name: 'Uganda',
     capital: 'Kampala',
     population: '45.7 million',
-    area: '241,550 km²',
-    description: 'Uganda features mountain gorillas, the source of the Nile River, and diverse landscapes from mountains to lakes.',
-    landmarks: ['Bwindi Impenetrable National Park', 'Murchison Falls', 'Lake Victoria', 'Rwenzori Mountains'],
+    area: '241,038 km²',
+    description: 'Uganda is known as the "Pearl of Africa" for its stunning landscapes, diverse wildlife, and vibrant culture.',
+    landmarks: ['Murchison Falls', 'Bwindi Impenetrable Forest', 'Lake Victoria', 'Rwenzori Mountains'],
     cities: [
-      { name: 'Kampala', lat: 0.3476, lng: 32.5825, population: '1.7 million' },
-      { name: 'Gulu', lat: 2.7747, lng: 32.2990, population: '146,858' },
+      { name: 'Kampala', lat: 0.3476, lng: 32.5825, population: '1.5 million' },
+      { name: 'Gulu', lat: 2.7747, lng: 32.2999, population: '152,276' },
       { name: 'Lira', lat: 2.2499, lng: 32.9000, population: '119,323' }
+    ]
+  },
+  'Western Sahara': {
+    name: 'Western Sahara',
+    capital: 'El Aaiún (disputed)',
+    population: '597,000',
+    area: '266,000 km²',
+    description: 'Western Sahara is a disputed territory in North Africa, bordered by Morocco, Algeria, and Mauritania. Its sovereignty remains contested between Morocco and the Sahrawi Arab Democratic Republic.',
+    landmarks: ['Laayoune (El Aaiún)', 'Smara', 'Dakhla Peninsula', 'Western Sahara Wall'],
+    cities: [
+      { name: 'El Aaiún', lat: 27.1418, lng: -13.1632, population: '217,000' },
+      { name: 'Dakhla', lat: 23.6848, lng: -15.9579, population: '106,000' },
+      { name: 'Smara', lat: 26.7384, lng: -11.6719, population: '57,000' }
     ]
   },
   'Zambia': {
@@ -1134,6 +1169,18 @@ function App() {
     let normalizedCountryName = countryName;
     if (countryName.toLowerCase() === 'eswatini') {
       normalizedCountryName = 'Eswatini';
+    } else if (countryName === 'W. Sahara') {
+      normalizedCountryName = 'Western Sahara';
+    } else if (countryName === 'Côte d\'Ivoire') {
+      normalizedCountryName = 'Ivory Coast';
+    } else if (countryName === 'Eq. Guinea') {
+      normalizedCountryName = 'Equatorial Guinea';
+    } else if (countryName === 'Central African Rep.') {
+      normalizedCountryName = 'Central African Republic';
+    } else if (countryName === 'S. Sudan') {
+      normalizedCountryName = 'South Sudan';
+    } else if (countryName === 'Dem. Rep. Congo') {
+      normalizedCountryName = 'Democratic Republic of the Congo';
     }
     
     if (countryInfo[normalizedCountryName]) {
@@ -1234,8 +1281,44 @@ function App() {
 
   // Get sector details
   const getSectorDetails = useCallback((sectorName: string) => {
-    return sectorsDetailsData.find(sector => sector.sector === sectorName) || null;
+    return sectorsDetailsData.find(sector => sector.sector === sectorName) as SectorDetails | null;
   }, []);
+
+  const polygonCapColor = useCallback((d: any) => {
+    const feature = d as CountryFeature;
+    const sectorCountries = getCountriesBySectors();
+    
+    // Normalize country name for lookup
+    let countryName = feature.properties?.name;
+    if (countryName === 'eSwatini') {
+      countryName = 'Eswatini';
+    } else if (countryName === 'W. Sahara') {
+      countryName = 'Western Sahara';
+    } else if (countryName === 'Côte d\'Ivoire') {
+      countryName = 'Ivory Coast';
+    } else if (countryName === 'Eq. Guinea') {
+      countryName = 'Equatorial Guinea';
+    } else if (countryName === 'Central African Rep.') {
+      countryName = 'Central African Republic';
+    } else if (countryName === 'S. Sudan') {
+      countryName = 'South Sudan';
+    } else if (countryName === 'Dem. Rep. Congo') {
+      countryName = 'Democratic Republic of the Congo';
+    }
+    
+    const isSelected = selectedCountry && countryName?.toLowerCase() === selectedCountry.toLowerCase();
+    const isInSelectedSector = sectorCountries.some(country => 
+      country.toLowerCase() === countryName?.toLowerCase()
+    );
+    
+    if (isInSelectedSector) {
+      return 'rgba(0, 200, 100, 0.3)'; // Light green for sector-associated countries
+    } else if (isSelected) {
+      return 'rgba(0, 100, 200, 0.3)'; // Blue highlight for selected country
+    } else {
+      return 'rgba(0, 0, 0, 0.1)'; // Original default color
+    }
+  }, [selectedCountry, getCountriesBySectors]);
 
   return (
     <div className="w-full h-screen relative bg-gradient-to-b from-white to-gray-100 overflow-hidden">
@@ -1504,29 +1587,26 @@ function App() {
           backgroundColor={backgroundColorMode === 'white' ? "#ffffff" : "rgba(0,0,0,0)"}
           polygonsData={countries.features}
           polygonAltitude={0.01}
-          polygonCapColor={(d: any) => {
-            const feature = d as CountryFeature;
-            const sectorCountries = getCountriesBySectors();
-            const isSelected = selectedCountry && feature.properties?.name?.toLowerCase() === selectedCountry.toLowerCase();
-            const isInSelectedSector = sectorCountries.some(country => 
-              country.toLowerCase() === feature.properties?.name?.toLowerCase()
-            );
-            
-            if (isInSelectedSector) {
-              return 'rgba(0, 200, 100, 0.3)'; // Light green for sector-associated countries
-            } else if (isSelected) {
-              return 'rgba(0, 100, 200, 0.3)'; // Blue highlight for selected country
-            } else {
-              return 'rgba(0, 0, 0, 0.1)'; // Original default color
-            }
-          }}
+          polygonCapColor={polygonCapColor}
           polygonSideColor={() => 'rgba(0, 100, 0, 0.15)'}
           polygonStrokeColor={() => '#111'}
           polygonLabel={(d: any) => {
             const feature = d as CountryFeature;
-            // Handle special case for eSwatini
+            // Handle special cases for country names
             if (feature.properties?.name === 'eSwatini') {
               return `<b>Eswatini</b>`;
+            } else if (feature.properties?.name === 'W. Sahara') {
+              return `<b>Western Sahara</b>`;
+            } else if (feature.properties?.name === 'Côte d\'Ivoire') {
+              return `<b>Ivory Coast</b>`;
+            } else if (feature.properties?.name === 'Eq. Guinea') {
+              return `<b>Equatorial Guinea</b>`;
+            } else if (feature.properties?.name === 'Central African Rep.') {
+              return `<b>Central African Republic</b>`;
+            } else if (feature.properties?.name === 'S. Sudan') {
+              return `<b>South Sudan</b>`;
+            } else if (feature.properties?.name === 'Dem. Rep. Congo') {
+              return `<b>Democratic Republic of the Congo</b>`;
             }
             return `<b>${feature.properties?.name}</b>`;
           }}
@@ -1534,9 +1614,21 @@ function App() {
           onPolygonClick={(polygon: any) => {
             const feature = polygon as CountryFeature;
             if (feature.properties?.name) {
-              // Handle special case for eSwatini
+              // Handle special cases for country names
               if (feature.properties.name === 'eSwatini') {
                 focusOnCountry({ ...feature, properties: { ...feature.properties, name: 'Eswatini' } });
+              } else if (feature.properties.name === 'W. Sahara') {
+                focusOnCountry({ ...feature, properties: { ...feature.properties, name: 'Western Sahara' } });
+              } else if (feature.properties.name === 'Côte d\'Ivoire') {
+                focusOnCountry({ ...feature, properties: { ...feature.properties, name: 'Ivory Coast' } });
+              } else if (feature.properties.name === 'Eq. Guinea') {
+                focusOnCountry({ ...feature, properties: { ...feature.properties, name: 'Equatorial Guinea' } });
+              } else if (feature.properties.name === 'Central African Rep.') {
+                focusOnCountry({ ...feature, properties: { ...feature.properties, name: 'Central African Republic' } });
+              } else if (feature.properties.name === 'S. Sudan') {
+                focusOnCountry({ ...feature, properties: { ...feature.properties, name: 'South Sudan' } });
+              } else if (feature.properties.name === 'Dem. Rep. Congo') {
+                focusOnCountry({ ...feature, properties: { ...feature.properties, name: 'Democratic Republic of the Congo' } });
               } else {
                 focusOnCountry(feature);
               }
@@ -1726,7 +1818,10 @@ function App() {
                 </div>
 
                 <div className="border-t border-gray-200 pt-4">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3">Facility Details</h3>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                    <Building className="w-5 h-5 mr-2 text-purple-600" />
+                    Facility Details
+                  </h3>
                   <p className="text-gray-700">
                     This {selectedFacility.facility_type} facility is located in {selectedFacility.country_name} and is {selectedFacility.status} by {selectedFacility.operator_name}, 
                     which is a {selectedFacility.operator_type}.
@@ -1811,7 +1906,7 @@ function App() {
                             Major Projects
                           </h3>
                           <ul className="list-disc pl-5 text-gray-700">
-                            {sectorDetails.major_projects.map((project, index) => (
+                            {sectorDetails.major_projects.map((project: string, index: number) => (
                               <li key={index}>{project}</li>
                             ))}
                           </ul>
@@ -1826,7 +1921,7 @@ function App() {
                             Security Risks
                           </h3>
                           <ul className="list-disc pl-5 text-red-700">
-                            {sectorDetails.security_risks.map((risk, index) => (
+                            {sectorDetails.security_risks.map((risk: string, index: number) => (
                               <li key={index}>{risk}</li>
                             ))}
                           </ul>
@@ -1841,7 +1936,7 @@ function App() {
                             Mitigation Capabilities
                           </h3>
                           <ul className="list-disc pl-5 text-green-700">
-                            {sectorDetails.mitigation_capabilities.map((capability, index) => (
+                            {sectorDetails.mitigation_capabilities.map((capability: string, index: number) => (
                               <li key={index}>{capability}</li>
                             ))}
                           </ul>
@@ -1856,10 +1951,47 @@ function App() {
                             Bilateral Agreements
                           </h3>
                           <ul className="list-disc pl-5 text-blue-700">
-                            {sectorDetails.bilateral_agreements.map((agreement, index) => (
+                            {sectorDetails.bilateral_agreements.map((agreement: string, index: number) => (
                               <li key={index}>{agreement}</li>
                             ))}
                           </ul>
+                        </div>
+                      )}
+                      
+                      {/* Entities */}
+                      {sectorDetails.entities && sectorDetails.entities.length > 0 && (
+                        <div className="bg-indigo-50 p-4 rounded-lg">
+                          <h3 className="text-lg font-semibold text-indigo-800 mb-3 flex items-center">
+                            <Building className="w-5 h-5 mr-2 text-indigo-600" />
+                            Key Entities
+                          </h3>
+                          <div className="space-y-4">
+                            {sectorDetails.entities.map((entity: {name: string, logo: string, description: string}, index: number) => {
+                              // Determine the logo path
+                              let logoPath = '';
+                              if (entity.logo === 'ihc_logo.png') {
+                                logoPath = '/images/logos/IHC.png';
+                              } else if (entity.logo === 'irh_logo.png') {
+                                logoPath = '/images/logos/IRH.png';
+                              }
+                              
+                              return (
+                                <div key={index} className="flex items-center bg-white p-3 rounded-lg shadow-sm">
+                                  <div className="w-12 h-12 mr-4 flex-shrink-0 rounded overflow-hidden">
+                                    <img 
+                                      src={logoPath}
+                                      alt={`${entity.name} logo`}
+                                      className="w-full h-full object-contain"
+                                    />
+                                  </div>
+                                  <div>
+                                    <h4 className="font-medium text-indigo-900">{entity.name}</h4>
+                                    <p className="text-sm text-gray-600">{entity.description}</p>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
                         </div>
                       )}
                       
@@ -1870,7 +2002,7 @@ function App() {
                           Countries Involved
                         </h3>
                         <div className="grid grid-cols-2 gap-2">
-                          {sectorDetails.countries.map((country, index) => (
+                          {sectorDetails.countries.map((country: {name: string, investment_type: string, security_risks: string[], mitigation_capabilities: string[], projects?: string[]}, index: number) => (
                             <div 
                               key={index} 
                               className="bg-white p-2 rounded border border-gray-200 text-sm cursor-pointer hover:bg-purple-50"
